@@ -1,7 +1,7 @@
 <template>
     <div class="task-list">
         <template v-for="(task ,index) in tasks">
-            <task-item :tasks="tasks" :task="task" :index="index" @edit="editTask"></task-item>
+            <task-item :tasks="tasks" :task="task" :index="index"></task-item>
         </template>
         <task-form @pushTask="addTask"></task-form>
     </div>
@@ -15,30 +15,25 @@
 
         data() {
             return {
-                newTask: {
-                    name: '',
-                    pending: true,
-                    editing: false,
-                },
-
                 tasks: [
                     {
                         name: 'Task uno',
                         pending: false,
-                        editing: false,
                     },
                     {
                         name: 'Task Dos',
                         pending: true,
-                        editing: false,
                     },
                     {
                         name: 'Task Tres',
                         pending: true,
-                        editing: false,
                     }
                 ],
             }
+        },
+
+        created() {
+            this.$bus.$on('removeTask', this.removeTask);
         },
 
         methods: {
@@ -48,12 +43,6 @@
                     pending: true,
                     editing: false,
                 });
-
-                this.newTask = { name: '', pending: true, editing: false}
-            },
-
-            editTask() {
-                this.tasks.forEach( task => task.editing = false );
             },
 
             removeTask(index) {
