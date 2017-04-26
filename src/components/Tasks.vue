@@ -1,7 +1,7 @@
 <template>
     <div class="task-list">
         <template v-for="(task ,index) in tasks">
-            <task-item :tasks="tasks" :task="task" :index="index" @remove="removeTask" @edit="editTask"></task-item>
+            <task-item :tasks="tasks" :task="task" :index="index" @edit="editTask"></task-item>
         </template>
         <task-form @pushTask="addTask"></task-form>
     </div>
@@ -9,8 +9,10 @@
 
 <script>
     import TaskForm from './TaskForm.vue';
-    import TaskItem from './TaskItem.vue'
+    import TaskItem from './TaskItem.vue';
+
     export default {
+
         data() {
             return {
                 newTask: {

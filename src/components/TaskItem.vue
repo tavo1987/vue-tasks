@@ -35,6 +35,7 @@
 
 <script>
     import Icon from './Icon.vue';
+    import EventBus from '../EventBus.js';
     export default {
         props: ['task', 'index'],
         components: {
@@ -53,7 +54,8 @@
             },
 
             remove() {
-                this.$emit('remove', this.index);
+                //this.$emit('remove', this.index);
+                this.$bus.$emit('remove', this.index);
             },
 
             edit() {
