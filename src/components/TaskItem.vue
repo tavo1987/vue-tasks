@@ -7,12 +7,12 @@
         </div>
 
         <div class="column is-7">
-            <span v-if="!task.editing" :class="{ complete: !task.pending }">{{task.name}}</span>
+            <span v-if="!editing" :class="{ complete: !task.pending }">{{task.name}}</span>
             <input class="input" v-else type="text" name="task" v-model="drafTask">
         </div>
 
         <div class="column is-3">
-            <template v-if="task.editing">
+            <template v-if="editing">
                 <a href="#" @click="update" class="button is-primary">
                     <app-icon icon="check"></app-icon>
                 </a>
@@ -44,8 +44,13 @@
 
         data() {
             return {
+                editing : false,
                 drafTask : '',
             }
+        },
+
+        created() {
+            this.$bus.$on('editingTask', task => this.editing = false);
         },
 
         methods: {
@@ -54,24 +59,23 @@
             },
 
             remove() {
-                //this.$emit('remove', this.index);
-                this.$bus.$emit('remove', this.index);
+                this.$bus.$emit('removeTask', this.index);
             },
 
             edit() {
-                this.$emit('edit');
-                this.task.editing = true;
+                this.$bus.$emit('editingTask', this.task);
+                this.editing = true;
                 this.drafTask = this.task.name
             },
 
             cancelEdit() {
-                this.task.editing = false;
-                this.drafTask.name = this.task.name;
+                this.editing = false;
+                this.drafTask = this.task.name;
             },
 
             update() {
                 this.task.name = this.drafTask;
-                this.task.editing = false;
+                this.editing = false;
             },
         }
     }
