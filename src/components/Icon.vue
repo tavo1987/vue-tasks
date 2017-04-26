@@ -1,14 +1,14 @@
 <template>
-   <span class="icon"><i :class="classCss"></i></span>
+   <span class="icon"><i :class="cssClass"></i></span>
 </template>
 
 <script>
    export default {
       props: ['icon'],
       computed: {
-         classCss() {
+         cssClass() {
             return `fa fa-${this.icon}`;
-         }
+         },
       },
    }
 </script>
