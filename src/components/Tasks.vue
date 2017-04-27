@@ -1,5 +1,14 @@
 <template>
     <div class="task-list">
+        <div class="columns">
+            <div class="column has-text-centered">
+                <a href="#" @click.prevent="completeAllTask" class="button is-warning">Completar todas</a>
+            </div>
+            <div class="column has-text-centered">
+                <a href="#" @click.prevent="deleteCompletedTask" class="button is-danger">Borrar completadas</a>
+            </div>
+        </div>
+
         <template v-for="(task ,index) in tasks">
             <task-item :tasks="tasks" :task="task" :index="index"></task-item>
         </template>
@@ -47,7 +56,19 @@
 
             removeTask(index) {
                 this.tasks.splice(index, 1);
+            },
+
+            completeAllTask() {
+                for ( let task of this.tasks){
+                    task.pending = false;
+                }
+            },
+
+            deleteCompletedTask() {
+                let uncompletedTasks = this.tasks.filter( task => task.pending);
+                this.tasks = uncompletedTasks;
             }
+
         },
 
         components: {
